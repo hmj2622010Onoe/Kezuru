@@ -6,6 +6,8 @@ public class HandleController : MonoBehaviour
 	[SerializeField] GameObject mainCamera;
 	[SerializeField] GameObject focusPointCamera;
 	[SerializeField] GameObject sharpner;
+	[SerializeField] GameObject normalPen;
+	[SerializeField] GameObject redPen;
 
 	[SerializeField] AudioClip se1;
 	[SerializeField] AudioClip se2;
@@ -19,6 +21,9 @@ public class HandleController : MonoBehaviour
 	float rotate = 0;
 	float randRotateS;
 	float randStopCount = 0;
+
+	float penCMax = 1000;
+	float penCount = 0;
 
 	[SerializeField]int shakingCountMax;
 	[SerializeField]int cameraCountMax;
@@ -37,6 +42,14 @@ public class HandleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (penCount == 0)
+		{
+			GameObject clonePen = Instantiate(normalPen, sharpner.transform);
+			clonePen.transform.position = new Vector3(-6,2,0);
+			clonePen.transform.eulerAngles = new Vector3(0,-90,0);
+			penCount = 0.9f;
+		}
+
 		if (randStopCount <= 0){
 			randRotateS = (rotateS / Random.Range(30, 500));
 			randStopCount = Random.Range(25,55);
@@ -44,17 +57,21 @@ public class HandleController : MonoBehaviour
 		}
 
 		if (Keyboard.current.wKey.IsPressed()){
+			if (penCMax <= penCount || penCount < 1) randRotateS = rotateS / 70;
 			rotate += randRotateS;
 			randStopCount -= randRotateS;
 			if (randRotateS == 0) randStopCount -= 0.5f;
 			shakingCount--;
 			cameraCount--;
+			if(penCMax>penCount || penCount >= 1) penCount+=0.1f;
 			//Debug.Log(transform.eulerAngles);
 			//Debug.Log(rotate);
-
-			if (Random.Range(0, seRange) == 1)AudioSource.PlayClipAtPoint(se1, transform.position);
-			if (Random.Range(0, seRange) == 1)AudioSource.PlayClipAtPoint(se2, transform.position);
-			if (Random.Range(0, seRange) == 1)AudioSource.PlayClipAtPoint(se3, transform.position);
+			if (penCMax > penCount||penCount<1)
+			{
+				if (Random.Range(0, seRange) == 1) AudioSource.PlayClipAtPoint(se1, transform.position);
+				if (Random.Range(0, seRange) == 1) AudioSource.PlayClipAtPoint(se2, transform.position);
+				if (Random.Range(0, seRange) == 1) AudioSource.PlayClipAtPoint(se3, transform.position);
+			}
 			//if (Random.Range(0, seRange) == 1)AudioSource.PlayClipAtPoint(se4, transform.position);
 			//if (Random.Range(0, seRange) == 1)AudioSource.PlayClipAtPoint(se5, transform.position);
 			//if (Random.Range(0, seRange) == 1)AudioSource.PlayClipAtPoint(se6, transform.position);
@@ -62,7 +79,7 @@ public class HandleController : MonoBehaviour
 
 		if (shakingCount <= 0)
 		{
-			if(randRotateS!=0)sharpner.transform.eulerAngles = new Vector3(Random.Range(-90-shakingRange, -90+shakingRange), Random.Range(-shakingRange, shakingRange), Random.Range(-shakingRange, shakingRange));
+			if(randRotateS!=0 || penCMax > penCount || penCount < 1) sharpner.transform.eulerAngles = new Vector3(Random.Range(-90-shakingRange, -90+shakingRange), Random.Range(-shakingRange, shakingRange), Random.Range(-shakingRange, shakingRange));
 			shakingCount = shakingCountMax;
 		}
 
