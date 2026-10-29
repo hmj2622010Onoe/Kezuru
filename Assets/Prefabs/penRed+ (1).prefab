@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9126505653276631003}
   - component: {fileID: 5110677633749037722}
   - component: {fileID: 4118254487385354587}
+  - component: {fileID: -6677885754468241446}
   m_Layer: 0
   m_Name: penRed+ (1)
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -6, y: 2, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -91,3 +92,19 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-6677885754468241446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367015048876208887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3dc5ee2d646d644d9b6e129a606b601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PenController
+  beforeX: -4.4
+  afterX: -2
+  redPen: 1
+  sePerfect: {fileID: 8300000, guid: a2710bb02fafcd44693bd7954d03c23e, type: 3}
